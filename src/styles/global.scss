@@ -1,7 +1,28 @@
+@import './crisp/index.scss';
+
 :root {
 	--foreground: #8f8f8f;
 	--body: #f5f5f4;
 	--scroll: #c4c4c4;
+
+	--accent: #ef5a3c;
+
+	--strength-red: #ff8487;
+	--strength-orange: #f8b858;
+	--strength-yellow: #f3e056;
+	--strength-green: #86e286;
+
+	--check-orange-primary: #fdba74;
+	--check-orange-secondary: #ffedd5;
+
+	--check-pink-primary: #f9a8d4;
+	--check-pink-secondary: #fce7f3;
+
+	--check-blue-primary: #93c5fd;
+	--check-blue-secondary: #dbeafe;
+
+	--check-green-primary: #bef264;
+	--check-green-secondary: #ecfccb;
 }
 
 * {
@@ -55,6 +76,9 @@ body {
 	min-height: 100vh;
 	max-width: $maxWidth;
 	padding: 0 16px;
+
+	@include make-flex($just: flex-start);
+	gap: 20px;
 }
 
 .Content {
