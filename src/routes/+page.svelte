@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Options from '$lib/OptionStore';
+	import copyToClipboard from '$lib/CopyToClipboard';
 
 	let strength: {
 		strength: string;
@@ -41,13 +42,19 @@
 	};
 
 	$: $Options.length, (strength = strengthIndicator($Options.length));
+
+	$: password = 'aifuvnsdigunsuinjsnsdfg,jdnfgksngdkrxnkgkdirkgund';
 </script>
 
 <div class="Col--center gap-5 w-100">
 	<div class="PasswordBox">
-		<code> aifuvnsdigunsuinjsnsdfg,jdnfgksngdkrxnkgkdirkgund </code>
+		<code> {password} </code>
 		<span class="PasswordBox__options">
-			<button class="CrispButton">
+			<button
+				class="CrispButton"
+				title="Copy Password"
+				on:click={async () => await copyToClipboard(password)}
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -62,7 +69,7 @@
 					<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
 				</svg>
 			</button>
-			<button class="CrispButton">
+			<button class="CrispButton" title="Refresh Password">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -89,7 +96,12 @@
 </div>
 
 <label class="CrispLabel gap-10">
-	<span> Length({$Options.length}) </span>
+	<span>
+		Length
+		<em>
+			({$Options.length})
+		</em>
+	</span>
 	<input type="range" min="10" max="32" class="CrispInput" bind:value={$Options.length} />
 </label>
 
@@ -101,9 +113,64 @@
 	</select>
 </label>
 
+<label class="CrispLabel">
+	<span> Parameters </span>
+	<div class="Parameter">
+		<label
+			data-align="center"
+			data-direction="row"
+			class="Parameter__item CrispLabel gap-10"
+			style="
+        --primary: {$Options.uppercase ? 'var(--check-orange-primary)' : '#e6e6e5'};
+        --secondary: {$Options.uppercase ? 'var(--check-orange-secondary)' : '#e6e6e5'};
+      "
+		>
+			<input class="CrispInput" type="checkbox" bind:checked={$Options.uppercase} />
+			<span> Upper Case </span>
+		</label>
+		<label
+			data-align="center"
+			data-direction="row"
+			class="Parameter__item CrispLabel gap-10"
+			style="
+        --primary: {$Options.lowercase ? 'var(--check-pink-primary)' : '#e6e6e5'};
+        --secondary: {$Options.lowercase ? 'var(--check-pink-secondary)' : '#e6e6e5'};
+      "
+		>
+			<input class="CrispInput" type="checkbox" bind:checked={$Options.lowercase} />
+			<span> Lower Case </span>
+		</label>
+		<label
+			data-align="center"
+			data-direction="row"
+			class="Parameter__item CrispLabel gap-10"
+			style="
+        --primary: {$Options.digits ? 'var(--check-blue-primary)' : '#e6e6e5'};
+        --secondary: {$Options.digits ? 'var(--check-blue-secondary)' : '#e6e6e5'};
+      "
+		>
+			<input class="CrispInput" type="checkbox" bind:checked={$Options.digits} />
+			<span> Numbers </span>
+		</label>
+		<label
+			data-align="center"
+			data-direction="row"
+			class="Parameter__item CrispLabel gap-10"
+			style="
+        --primary: {$Options.symbols ? 'var(--check-green-primary)' : '#e6e6e5'};
+        --secondary: {$Options.symbols ? 'var(--check-green-secondary)' : '#e6e6e5'};
+      "
+		>
+			<input class="CrispInput" type="checkbox" bind:checked={$Options.symbols} />
+			<span> Special Characters </span>
+		</label>
+	</div>
+</label>
+
 <style lang="scss">
 	.PasswordBox {
 		padding: 12px;
+		margin-top: 65px;
 		@include box(100%, 150px);
 		@include make-flex($just: space-between);
 
@@ -166,7 +233,32 @@
 				@include box(100%, 6px);
 				background-color: #e6e6e5;
 
-        transition: background-color 0.3s;
+				transition: background-color 0.3s;
+			}
+		}
+	}
+
+	.Parameter {
+		@include box(100%, auto);
+		@include make-flex($dir: row, $just: space-between);
+		flex-wrap: wrap;
+		gap: 10px;
+		&__item {
+			width: auto;
+			flex-grow: 1;
+			cursor: pointer;
+			padding: 10px;
+			border-radius: 7px;
+
+			border: 1px solid var(--primary);
+			background-color: var(--secondary);
+
+			& > input {
+				--crp-checkbox-checked-background-color: var(--primary);
+				--crp-input-border: none;
+			}
+			span {
+				color: #303030;
 			}
 		}
 	}
