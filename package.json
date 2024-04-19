@@ -36,5 +36,8 @@
 	"type": "module",
 	"dependencies": {
 		"nanoid": "^5.0.7"
+	},
+	"engines": {
+		"node": "^18.19.1"
 	}
 }
