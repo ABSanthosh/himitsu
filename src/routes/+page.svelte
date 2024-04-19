@@ -1,6 +1,12 @@
 <script lang="ts">
-	import Options from '$lib/OptionStore';
+	import Options, { type IOptions } from '$lib/OptionStore';
 	import copyToClipboard from '$lib/CopyToClipboard';
+	import { customAlphabet } from 'nanoid';
+
+	const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+	const digits = '0123456789';
+	const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
 	let strength: {
 		strength: string;
@@ -43,12 +49,24 @@
 
 	$: $Options.length, (strength = strengthIndicator($Options.length));
 
-	$: password = 'aifuvnsdigunsuinjsnsdfg,jdnfgksngdkrxnkgkdirkgund';
+	const nanoid = (length: number, options: IOptions) =>
+		customAlphabet(
+			`${options.uppercase ? uppercase : ''}${options.lowercase ? lowercase : ''}${options.digits ? digits : ''}${options.symbols ? symbols : ''}`,
+			length
+		)();
+
+	$: password = nanoid($Options.length, $Options);
 </script>
+
+<h2 class="Title">
+	Takes {strength.time} to crack
+</h2>
 
 <div class="Col--center gap-5 w-100">
 	<div class="PasswordBox">
-		<code> {password} </code>
+		<code>
+			{password}
+		</code>
 		<span class="PasswordBox__options">
 			<button
 				class="CrispButton"
@@ -69,7 +87,11 @@
 					<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
 				</svg>
 			</button>
-			<button class="CrispButton" title="Refresh Password">
+			<button
+				class="CrispButton"
+				title="Refresh Password"
+				on:click={() => (password = nanoid($Options.length, $Options))}
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -102,18 +124,33 @@
 			({$Options.length})
 		</em>
 	</span>
-	<input type="range" min="10" max="32" class="CrispInput" bind:value={$Options.length} />
+	<!-- https://stackoverflow.com/a/57153340/10376131 -->
+	<input
+		type="range"
+		min="10"
+		max="32"
+		style="
+			background: linear-gradient(
+				to right, 
+				var(--accent) 0%, 
+				var(--accent) {(($Options.length - 10) * 100) / 22}%, 
+				#fff {(($Options.length - 10) * 100) / 22}%, 
+				white 100%
+			)"
+		class="CrispInput"
+		bind:value={$Options.length}
+	/>
 </label>
 
 <label class="CrispLabel gap-10">
 	<span> Password Type </span>
-	<select class="CrispSelect w-100" bind:value={$Options.type}>
+	<select class="CrispSelect w-100" bind:value={$Options.type} disabled>
 		<option value="password">Password</option>
 		<option value="pin">PIN</option>
 	</select>
 </label>
 
-<label class="CrispLabel">
+<div class="CrispLabel gap-10">
 	<span> Parameters </span>
 	<div class="Parameter">
 		<label
@@ -165,12 +202,16 @@
 			<span> Special Characters </span>
 		</label>
 	</div>
-</label>
+</div>
 
 <style lang="scss">
+	.Title {
+		margin: 35px 0;
+		color: #303030;
+	}
 	.PasswordBox {
 		padding: 12px;
-		margin-top: 65px;
+		// margin-top: 65px;
 		@include box(100%, 150px);
 		@include make-flex($just: space-between);
 

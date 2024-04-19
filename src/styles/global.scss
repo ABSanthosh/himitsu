@@ -75,7 +75,7 @@ body {
 	@include box(100vw, auto);
 	min-height: 100vh;
 	max-width: $maxWidth;
-	padding: 0 16px;
+	padding: 0 16px 16px;
 
 	@include make-flex($just: flex-start);
 	gap: 20px;
