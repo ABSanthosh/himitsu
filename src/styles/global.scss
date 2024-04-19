@@ -29,7 +29,10 @@
 html {
 	overflow-y: auto;
 	overflow-x: hidden;
-	font-family: 'Assistant', sans-serif;
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+
 	font-optical-sizing: auto;
 	letter-spacing: 0.7px;
 
@@ -40,8 +43,7 @@ html {
 	// scroll-behavior: smooth;
 }
 
-body,
-#app {
+body {
 	@include box(100vw, auto);
 	background-color: var(--body);
 	min-height: 100vh;
@@ -49,7 +51,10 @@ body,
 }
 
 #app {
+	@include box(100vw, auto);
 	min-height: 100vh;
+	max-width: $maxWidth;
+	padding: 0 16px;
 }
 
 .Content {
