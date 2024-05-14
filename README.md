@@ -1,38 +1,18 @@
-# create-svelte
+![image](https://github.com/ABSanthosh/himitsu/assets/24393343/a842b3b0-c1e9-49ef-99ea-fff471a83540)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Himitsu is a simple yet powerful web app that generates strong and secure passwords for your online accounts. With its sleek and intuitive interface built on SvelteKit and custom [Crisp utility styles](https://crisp.abs.moe/).
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Secure Password Generation**: Utilizes the Nano ID library to create strong and random passwords that keep your accounts safe.
+- **Customizable Options**: Tailor your passwords to your specific needs with adjustable length and character set options.
+- **User-Friendly Interface**: Designed with simplicity and elegance in mind, making password generation a breeze for users of all levels.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Contributing
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+Contributions from the community are welcome! Whether it's fixing bugs, adding new features, or improving documentation, every contribution is appreciated. To contribute, simply fork this repository, make your changes, and submit a pull request.
 
-## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+---
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Crafted with ❤️ by [Santhosh](https://github.com/ABSanthosh)
